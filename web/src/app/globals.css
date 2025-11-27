@@ -1,0 +1,101 @@
+:root {
+  --primary-color: #00a8cc;
+  --secondary-color: #2c3e50;
+  --accent-color: #f39c12;
+  --muted: #6c7a89;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+  background-color: #f8f9fb;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+main {
+  min-height: 70vh;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: var(--primary-color) !important;
+}
+.nav-link {
+  font-weight: 500;
+  color: var(--secondary-color);
+}
+.nav-link.active {
+  color: var(--primary-color) !important;
+}
+.btn-cta {
+  background-color: var(--accent-color);
+  color: white;
+  border-radius: 20px;
+  padding: 8px 18px;
+}
+.btn-cta:hover {
+  background-color: #e67e22;
+  color: white;
+}
+
+.hero-section {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('https://source.unsplash.com/1600x900/?sofa,cleaning');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 110px 0;
+}
+
+.service-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: none;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.footer {
+  background-color: var(--secondary-color);
+  color: white;
+}
+.footer a {
+  color: #d7dde4;
+}
+
+.icon-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.admin-shell {
+  background: linear-gradient(135deg, #f6fbff, #eef3ff);
+}
+.admin-sidebar {
+  width: 250px;
+  background: white;
+}
+.admin-sidebar .btn {
+  border: none;
+  background: #f6f9fc;
+  color: var(--secondary-color);
+}
+.admin-sidebar .btn.active,
+.admin-sidebar .btn:hover {
+  background: var(--primary-color);
+  color: #fff;
+}

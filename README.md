@@ -1,43 +1,45 @@
-# Pırıl Koltuk Yıkama – React + Admin Panel
+# Pırıl Koltuk Yıkama – Next.js Tek Uygulama
 
-Taşınan tüm HTML şablonları `docs/` klasöründedir. Aynı görünüm dilini koruyan React tabanlı bir vitrin ve JWT korumalı yönetim paneli eklendi. API katmanı PostgreSQL kullanıyor.
-
-## Özellikler
-- React (Vite) ön yüz: Anasayfa, hakkımızda, portföy, galeri, blog, iletişim formları.
-- Yönetim paneli: Hizmet, proje, galeri, blog ve gelen talepler için CRUD + istatistik kartları.
-- Node/Express API: JWT oturum, Postgres bağlantısı, hazır migration/seed komutları.
-- Örnek veri ve hazır admin hesabı (seed içinde): `admin@piril.com` / `admin123`.
+`web/` klasöründe Next.js (App Router) tabanlı vitrin + yönetim paneli + Postgres API tek pakette toplandı. Eski HTML şablonları referans için `docs/` içinde duruyor.
 
 ## Hızlı Başlangıç
-1. PostgreSQL’i başlatın ve bağlantı adresinizi `.env` dosyalarına yazın.
-2. Sunucu bağımlılıkları:  
-   ```bash
-   cd server
-   npm install
-   cp .env.example .env   # bağlantıyı ve JWT_SECRET'i güncelleyin
-   npm run db:seed        # migration + örnek veri + admin kullanıcısı
-   npm run dev            # API http://localhost:4000
-   ```
-3. İstemci bağımlılıkları:  
-   ```bash
-   cd client
-   npm install
-   cp .env.example .env   # gerekirse API adresini düzenleyin
-   npm run dev            # ön yüz http://localhost:5173
-   ```
+1) **Ortam değişkenleri**  
+`cp web/.env.example web/.env` ve `DATABASE_URL`, `JWT_SECRET` değerlerini güncelleyin.  
+`NEXT_PUBLIC_API_URL` varsayılanı `/api` (aynı hosttan çağrı).
 
-## Önemli Diziler
-- `docs/`: Orijinal HTML şablonları (CSS kopyası dahil).
-- `client/`: React uygulaması ve yönetim paneli.
-- `server/`: Express API, migration (`db/migrations`), seed ve scriptler (`scripts/`).
+2) **Bağımlılıklar**  
+```bash
+cd web
+npm install
+```
 
-## API Uçları (özet)
-- `POST /api/auth/login` → JWT üretir.
-- `GET/POST/PUT/DELETE /api/services`, `/projects`, `/posts`, `/gallery` → CRUD (yazma işlemleri JWT ister).
-- `POST /api/contacts` → Form gönderimi (public), `GET/PUT /api/contacts/:id/status` → yönetici.
-- `GET /api/dashboard/metrics` → Panel kartları ve son talepler.
+3) **Veritabanı**  
+```bash
+cd web
+npm run db:seed   # migration + örnek veri + admin kullanıcısı
+```
 
-## Notlar
-- Varsayılan CORS: `http://localhost:5173` (env ile değiştirilebilir).
-- İletişim formu veritabanına `contact_requests` tablosuna düşer; panelden durum yönetilir.
-- `docs/` içindeki statik şablonlar referans amaçlıdır; React uygulaması aynı içerik temasıyla çalışır.
+4) **Çalıştır**  
+```bash
+cd web
+npm run dev
+```
+Uygulama: `http://localhost:3000`  
+Admin girişi (seed ile gelir): `admin@piril.com` / `admin123`
+
+## İçerik ve Yapı
+- `src/app/(site)/*`: Anasayfa, hakkımızda, portföy, galeri, blog, iletişim.
+- `src/app/admin/*`: Yönetim paneli (hizmet, proje, galeri, blog, talepler) + login.
+- `src/app/api/*`: Next.js route handlers (JWT, services, projects, gallery, posts, contacts, dashboard).
+- `db/migrations/`: Postgres şeması; `scripts/migrate.js`, `scripts/seed.js` ile yönetilir.
+- Ortak stiller: `src/app/globals.css`; Bootstrap + FontAwesome yükleniyor.
+
+## Önemli Değişkenler
+- `DATABASE_URL`: Postgres bağlantısı (Render/Railway/Neon vs).
+- `JWT_SECRET`: Token üretimi.
+- `ADMIN_EMAIL`, `ADMIN_PASSWORD`: Seed için opsiyonel override.
+- `PGSSLMODE=require`: SSL isteyen DB servisleri için.
+
+## Deploy İpuçları
+- Vercel: `web/` kök olarak seçip env değişkenlerini girin; `/api/*` rotaları serverless çalışır. DB migration/seed’i bir kere CI veya lokalden `DATABASE_URL` uzaktaki DB’yi gösterirken çalıştırın.
+- Tek host olduğundan `NEXT_PUBLIC_API_URL=/api` bırakabilirsiniz; frontend ve API aynı domain altında. 
