@@ -12,16 +12,30 @@ const PORT = process.env.PORT || 4000;
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
 const allowedOrigins = (process.env.CORS_ORIGIN || '*')
   .split(',')
-  .map((o) => o.trim());
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+const isOriginAllowed = (origin) => {
+  if (!origin) return true; // same-origin or curl
+  if (allowedOrigins.includes('*')) return true;
+  return allowedOrigins.some((allowed) => {
+    if (allowed === origin) return true;
+    // wildcard destekle: https://*.vercel.app
+    if (allowed.startsWith('https://*.') || allowed.startsWith('http://*.')) {
+      const hostname = origin.replace(/^https?:\/\//, '');
+      const allowHost = allowed.replace(/^https?:\/\/\*\./, '');
+      return hostname.endsWith(allowHost);
+    }
+    return false;
+  });
+};
 
 app.use(
   cors({
-    origin(origin, callback) {
-      if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-      return callback(new Error('Origin not allowed by CORS'));
-    },
+    origin: (origin, callback) =>
+      isOriginAllowed(origin)
+        ? callback(null, true)
+        : callback(new Error('Origin not allowed by CORS')),
     credentials: true,
   }),
 );
