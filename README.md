@@ -32,7 +32,7 @@ Admin girişi (seed ile gelir): `admin@piril.com` / `admin123`
 - `src/app/admin/*`: Yönetim paneli (hizmet, proje, galeri, blog, talepler) + login.
 - `src/app/api/*`: Next.js route handlers (JWT, services, projects, gallery, posts, contacts, dashboard).
 - `db/migrations/`: Postgres şeması; `scripts/migrate.js`, `scripts/seed.js` ile yönetilir.
-- Ortak stiller: `src/app/globals.css`; Bootstrap + FontAwesome yükleniyor.
+- Ortak stiller: `src/app/globals.css`; Bootstrap + FontAwesome yükleniyor. 
 
 ## Önemli Değişkenler
 - `DATABASE_URL`: Postgres bağlantısı (Render/Railway/Neon vs).
