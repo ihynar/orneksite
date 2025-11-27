@@ -1,0 +1,30 @@
+:root {
+    --primary-color: #00a8cc; /* Temizlik Mavisi */
+    --secondary-color: #2c3e50; /* Koyu Gri/Lacivert */
+    --accent-color: #f39c12; /* Aksiyon Turuncusu */
+}
+
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333; }
+
+/* Navbar */
+.navbar-brand { font-weight: bold; color: var(--primary-color) !important; }
+.nav-link { font-weight: 500; }
+.btn-cta { background-color: var(--accent-color); color: white; border-radius: 20px; padding: 8px 25px; }
+.btn-cta:hover { background-color: #e67e22; color: white; }
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://source.unsplash.com/1600x900/?sofa,cleaning');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    padding: 100px 0;
+}
+
+/* Kartlar */
+.service-card { transition: transform 0.3s; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+.service-card:hover { transform: translateY(-10px); }
+
+/* Footer */
+footer { background-color: var(--secondary-color); color: white; padding: 50px 0; }
+footer a { color: #ddd; text-decoration: none; }
